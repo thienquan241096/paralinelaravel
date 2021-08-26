@@ -11,4 +11,9 @@ class TeamRepository extends AbstractRepository implements InterfaceTeamReposito
     {
         return new Team();
     }
+
+    public function search($keyword)
+    {
+        return 1;
+    }
 }

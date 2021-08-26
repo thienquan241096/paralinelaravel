@@ -32,7 +32,7 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Dashboard</h1>
+                            @yield('title')
                         </div><!-- /.col -->
 
                     </div><!-- /.row -->
@@ -67,7 +67,7 @@
     </div>
     <!-- ./wrapper -->
     @include('admin.layouts.script')
-    @yield('pagescript')
+    @yield('script')
 
 </body>
 

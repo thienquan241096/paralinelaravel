@@ -2,6 +2,8 @@
 
 namespace App\Repositories;
 
+use Illuminate\Support\Facades\Auth;
+
 abstract class AbstractRepository implements InterfaceRepository
 {
     protected $model;
@@ -21,11 +23,14 @@ abstract class AbstractRepository implements InterfaceRepository
 
     public function all()
     {
-        return $this->model->all();
+        return $this->model->where('del_flag', '=', 0)->get();
     }
 
-    public function create(array $attributes)
+    public function create($attributes = [])
     {
+        $attributes['ins_id'] = 1;
+        $attributes['upd_id'] = 1;
+        $attributes['del_flag'] = 0;
         return $this->model->create($attributes);
     }
 
@@ -36,21 +41,34 @@ abstract class AbstractRepository implements InterfaceRepository
 
     public function update($id, array $attributes)
     {
-        $data = $this->model->findByID($id);
-        if (!$data) {
+        $attributes['upd_id'] = 1;
+        $findResult = $this->findByID($id);
+        if (!$findResult) {
             return false;
         }
-        $data->update($attributes);
-        return $data;
+        $findResult->update($attributes);
+        return $findResult;
     }
 
-    public function delete($id, array $attributes)
+    public function fillData($attributes = [])
     {
-        $data = $this->model->findByID($id);
-        if (!$data) {
+        $result = $this->model->fill($attributes);
+        return $result;
+    }
+
+    public function delete($id, $attributes = [])
+    {
+        $attributes['upd_id'] = 1;
+        $findResult = $this->findByID($id);
+        if (!$findResult) {
             return false;
         }
-        $data->update($attributes);
-        return $data;
+        $findResult->update($attributes);
+        return $findResult;
+    }
+
+    public function search($keyword)
+    {
+        return $this->model->where('name', 'like', '%' . "$keyword " . '%')->get();
     }
 }

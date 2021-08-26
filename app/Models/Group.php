@@ -11,9 +11,11 @@ class Group extends Model
 
     protected $table = 'm_groups';
     protected $fillable = [
-        'name',
-        'ins_id',
-        'upd_id',
-        'del_flag'
+        'name', 'ins_id', 'upd_id', 'del_flag',
     ]; // cho phép clinet tương tác với các trường trong db
+
+    public function m_teams()
+    {
+        return $this->hasMany(Team::class, 'group_id', 'id');
+    }
 }
