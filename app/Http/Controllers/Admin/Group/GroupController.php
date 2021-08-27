@@ -5,15 +5,20 @@ namespace App\Http\Controllers\Admin\Group;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GroupFormRequest;
 use App\Repositories\GroupRepositories\InterfaceGroupRepository;
+use App\Repositories\TeamRepositories\InterfaceTeamRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
 
 class GroupController extends Controller
 {
     protected $group;
+    protected $team;
 
-    public function __construct(InterfaceGroupRepository $group)
+
+    public function __construct(InterfaceGroupRepository $group, InterfaceTeamRepository $team)
     {
         $this->group = $group;
+        $this->team = $team;
     }
 
     public function index()
@@ -36,7 +41,7 @@ class GroupController extends Controller
     public function postAdd(GroupFormRequest $request)
     {
         $this->group->create($request->all());
-        return redirect()->route('admin.group.index')->with('message', 'create success');
+        return redirect()->route('admin.group.index')->with('message', 'Create success');
     }
 
     public function getEdit(Request $request)
@@ -53,10 +58,9 @@ class GroupController extends Controller
 
     public function delete(Request $request)
     {
-        $data = [
-            'del_flag' => 1
-        ];
-        $delete = $this->group->delete($request->id, $data);
+        $data = Config::get('common.DEL_FLAG');
+        $this->team->deleteTeamByGroupID($request->id, $data);
+        $this->group->delete($request->id, $data);
 
         return redirect()->route('admin.group.index')->with('message', 'Delete success');
     }

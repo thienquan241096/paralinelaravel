@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class EmployeeFormRequest extends FormRequest
 {
@@ -23,8 +24,34 @@ class EmployeeFormRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
+        $formRules = [
+            'email' => [
+                'required', 'max:128', 'email',
+                Rule::unique('m_employees')->ignore($this->id)
+            ],
+            'first_name' => [
+                'required', 'min:2', 'max:128'
+            ],
+            'last_name' => [
+                'required', 'min:2', 'max:128'
+            ],
+            'birthday' => [
+                'required', 'date'
+            ],
+            'address' => [
+                'required', 'min:6', 'max:256'
+            ],
+            'avatar' => [
+                'mimes:jpeg,jpg,png,gif',
+                // 'max:10000'
+            ],
+            'salary' => [
+                'required', 'numeric', 'min:4'
+            ],
         ];
+        if ($this->id == null) {
+            $formRules['avatar'][] = 'required';
+        }
+        return $formRules;
     }
 }

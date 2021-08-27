@@ -14,7 +14,7 @@ class CreateMGroupsTable extends Migration
     public function up()
     {
         Schema::create('m_groups', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->string('name', 128)->nullable();
             $table->integer('ins_id')->nullable();
             $table->integer('upd_id');

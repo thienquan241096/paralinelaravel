@@ -50,8 +50,11 @@ abstract class AbstractRepository implements InterfaceRepository
         return $findResult;
     }
 
-    public function fillData($attributes = [])
+    public function fill($attributes = [])
     {
+        $attributes['ins_id'] = 1;
+        $attributes['upd_id'] = 1;
+        $attributes['del_flag'] = 0;
         $result = $this->model->fill($attributes);
         return $result;
     }
@@ -70,5 +73,10 @@ abstract class AbstractRepository implements InterfaceRepository
     public function search($keyword)
     {
         return $this->model->where('name', 'like', '%' . "$keyword " . '%')->get();
+    }
+
+    public function save()
+    {
+        return $this->model->save();
     }
 }

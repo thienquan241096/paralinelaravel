@@ -1,6 +1,6 @@
 @extends('admin.layouts.index')
 @section('title')
-<h1 class="m-0">Add Group</h1>
+<h1 class="m-0">Add TEAM</h1>
 @endsection
 @section('content')
 <form action="{{ route('admin.group.postAdd') }}" method="post">

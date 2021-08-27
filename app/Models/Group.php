@@ -10,6 +10,7 @@ class Group extends Model
     use HasFactory;
 
     protected $table = 'm_groups';
+    protected $primaryKey = 'id';
     protected $fillable = [
         'name', 'ins_id', 'upd_id', 'del_flag',
     ]; // cho phép clinet tương tác với các trường trong db

@@ -4,29 +4,30 @@ namespace App\Http\Controllers\Admin\Team;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TeamFormRequest;
+use App\Repositories\EmployeeRepositories\InterfaceEmployeeRepository;
 use App\Repositories\GroupRepositories\InterfaceGroupRepository;
 use App\Repositories\TeamRepositories\InterfaceTeamRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
 
 class TeamController extends Controller
 {
     protected $team;
     protected $group;
+    protected $employee;
 
-    public function __construct(InterfaceGroupRepository $group, InterfaceTeamRepository $team)
+    public function __construct(InterfaceGroupRepository $group, InterfaceTeamRepository $team, InterfaceEmployeeRepository $employee)
     {
-
         $this->team = $team;
         $this->group = $group;
+        $this->employee = $employee;
     }
 
     public function index()
     {
         $teams = $this->team->all();
         $teams->load('m_groups');
-        // $groups = $this->group->all();
         return view('admin.team.index', compact('teams'));
-        // , compact('teams', 'groups')
     }
 
     public function view(Request $request)
@@ -45,7 +46,7 @@ class TeamController extends Controller
     public function postAdd(TeamFormRequest $request)
     {
         $this->team->create($request->all());
-        return redirect()->route('admin.team.index')->with('message', 'create success');
+        return redirect()->route('admin.team.index')->with('message', 'Create success');
     }
 
     public function getEdit(Request $request)
@@ -63,11 +64,9 @@ class TeamController extends Controller
 
     public function delete(Request $request)
     {
-        // dump(1);
-        // die;
-        $this->team->delete($request->id, [
-            'del_flag' => 1
-        ]);
+        $data = Config::get('common.DEL_FLAG');
+        $this->employee->deleteEmployeeByTeamID($request->id, $data);
+        $this->team->delete($request->id, $data);
         return redirect()->route('admin.team.index')->with('message', 'Delete success');
     }
 }

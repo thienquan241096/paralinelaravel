@@ -11,4 +11,8 @@ class GroupRepository extends AbstractRepository implements InterfaceGroupReposi
     {
         return new Group();
     }
+
+    public function test()
+    {
+    }
 }

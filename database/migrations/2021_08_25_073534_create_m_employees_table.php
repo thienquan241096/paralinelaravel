@@ -14,9 +14,9 @@ class CreateMEmployeesTable extends Migration
     public function up()
     {
         Schema::create('m_employees', function (Blueprint $table) {
-            $table->id();
-            $table->integer('team_id')->nullable();
-            $table->string('email', 128)->nullable();
+            $table->increments('id');
+            $table->unsignedInteger('team_id')->nullable();
+            $table->string('email', 128)->unique();
             $table->string('first_name', 128)->nullable();
             $table->string('last_name', 128)->nullable();
             $table->char('gender', 1)->comment("1: Male, 2: Female");
@@ -31,6 +31,7 @@ class CreateMEmployeesTable extends Migration
             $table->integer('upd_id');
             $table->char('del_flag', 1)->default(0)->comment("0: Active, 1: Deleted");
             $table->timestamps();
+            $table->foreign('team_id')->references('id')->on('m_teams')->onDelete('cascade');
         });
     }
 

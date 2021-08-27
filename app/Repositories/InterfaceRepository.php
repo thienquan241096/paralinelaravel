@@ -16,5 +16,6 @@ interface InterfaceRepository
 
     public function search($keywword);
 
-    public function fillData($attributes = []);
+    public function fill($attributes = []);
+    public function save();
 }

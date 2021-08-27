@@ -14,12 +14,13 @@ class CreateMTeamsTable extends Migration
     public function up()
     {
         Schema::create('m_teams', function (Blueprint $table) {
-            $table->id();
-            $table->integer('group_id')->nullable();
+            $table->increments('id');
+            $table->unsignedInteger('group_id');
             $table->string('name', 128)->nullable();
             $table->integer('ins_id')->nullable();
             $table->integer('upd_id');
             $table->char('del_flag', 1)->default(0)->comment("0: Active, 1: Deleted");
+            $table->foreign('group_id')->references('id')->on('m_groups')->onDelete('cascade');
             $table->timestamps();
         });
     }

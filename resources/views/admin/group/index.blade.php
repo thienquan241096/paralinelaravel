@@ -16,7 +16,7 @@
     <div class="col-md-10">
         <form action="" method="GET">
             <div class="input-group">
-                <input type="search" class="form-control form-control-lg" placeholder="Type your keywords here">
+                <input type="search" class="form-control form-control-lg" placeholder="what do you search ...?">
                 <div class="input-group-append">
                     <button type="submit" class="btn btn-lg btn-default">
                         <i class="fa fa-search"></i>

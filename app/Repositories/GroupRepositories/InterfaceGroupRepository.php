@@ -6,4 +6,5 @@ use App\Repositories\InterfaceRepository;
 
 interface InterfaceGroupRepository extends InterfaceRepository
 {
+    public function test();
 }

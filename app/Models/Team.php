@@ -9,6 +9,7 @@ class Team extends Model
 {
     use HasFactory;
     protected $table = 'm_teams';
+    protected $primaryKey = 'id';
     protected $fillable = [
         'name', 'group_id', 'ins_id', 'upd_id', 'del_flag',
     ];

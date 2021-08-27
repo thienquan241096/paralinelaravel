@@ -11,4 +11,13 @@ class EmployeeRepository extends AbstractRepository implements InterfaceEmployee
     {
         return new Employee();
     }
+
+    public function deleteEmployeeByTeamID($parent_id, $attributes = [])
+    {
+        $attributes['upd_id'] = 1;
+        if (!$parent_id) {
+            return false;
+        }
+        return $this->model->where('team_id', $parent_id)->update($attributes);
+    }
 }
