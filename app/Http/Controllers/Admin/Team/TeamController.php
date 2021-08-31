@@ -27,7 +27,21 @@ class TeamController extends Controller
     {
         $teams = $this->team->all();
         $teams->load('m_groups');
-        return view('admin.team.index', compact('teams'));
+        $groups = $this->group->getAll();
+        return view('admin.team.index', compact('teams', 'groups'));
+    }
+
+    public function getSearch(Request $request)
+    {
+        $keyword = $request->keyword;
+        $group_id = $request->group_id;
+        $teams = $this->team->search($keyword)->paginate(3);
+        if ($group_id > 0) {
+            $teams = $this->team->searchTeam($keyword, $group_id)->paginate(3);
+        }
+        $teams->load('m_groups');
+        $groups = $this->group->getAll();
+        return view('admin.team.index', compact('teams', 'groups'));
     }
 
     public function view(Request $request)
@@ -39,27 +53,33 @@ class TeamController extends Controller
 
     public function getAdd(Request $request)
     {
-        $groups = $this->group->all();
+        $groups = $this->group->getAll();
         return view('admin.team.add', compact('groups'));
     }
 
     public function postAdd(TeamFormRequest $request)
     {
         $this->team->create($request->all());
-        return redirect()->route('admin.team.index')->with('message', 'Create success');
+        return response()->json([
+            'status' => 200,
+            'message' => 'Create success'
+        ]);
     }
 
     public function getEdit(Request $request)
     {
         $team = $this->team->findByID($request->id);
-        $groups = $this->group->all();
+        $groups = $this->group->getAll();
         return view('admin.team.edit', compact('team', 'groups'));
     }
 
     public function postEdit(TeamFormRequest $request)
     {
         $this->team->update($request->id, $request->all());
-        return redirect()->route('admin.team.index')->with('message', 'Update success');
+        return response()->json([
+            'status' => 200,
+            'message' => 'Update success'
+        ]);
     }
 
     public function delete(Request $request)

@@ -2,12 +2,13 @@
 
 namespace App\Repositories;
 
+define('DEL_FLAG', 0);
+
 use Illuminate\Support\Facades\Auth;
 
 abstract class AbstractRepository implements InterfaceRepository
 {
     protected $model;
-
 
     public function __construct()
     {
@@ -23,7 +24,12 @@ abstract class AbstractRepository implements InterfaceRepository
 
     public function all()
     {
-        return $this->model->where('del_flag', '=', 0)->get();
+        return $this->model->where('del_flag', '=', DEL_FLAG)->paginate(3);
+    }
+
+    public function getAll()
+    {
+        return $this->model->where('del_flag', '=', DEL_FLAG)->get();
     }
 
     public function create($attributes = [])
@@ -72,7 +78,12 @@ abstract class AbstractRepository implements InterfaceRepository
 
     public function search($keyword)
     {
-        return $this->model->where('name', 'like', '%' . "$keyword " . '%')->get();
+        return $this->model->where('name', 'like', '%' . "$keyword" . '%')->where('del_flag', '=', DEL_FLAG)->orderByDesc('id');
+    }
+
+    public function get($keyword)
+    {
+        return $this->search($keyword)->paginate(3);
     }
 
     public function save()

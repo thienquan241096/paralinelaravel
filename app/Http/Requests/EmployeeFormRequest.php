@@ -4,6 +4,10 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator as ValidationValidator;
+
 
 class EmployeeFormRequest extends FormRequest
 {
@@ -36,14 +40,15 @@ class EmployeeFormRequest extends FormRequest
                 'required', 'min:2', 'max:128'
             ],
             'birthday' => [
-                'required', 'date'
+                'required', 'date_format:Y-m-d'
             ],
             'address' => [
                 'required', 'min:6', 'max:256'
             ],
             'avatar' => [
+                // 'required',
                 'mimes:jpeg,jpg,png,gif',
-                // 'max:10000'
+                'max:10000'
             ],
             'salary' => [
                 'required', 'numeric', 'min:4'
@@ -53,5 +58,18 @@ class EmployeeFormRequest extends FormRequest
             $formRules['avatar'][] = 'required';
         }
         return $formRules;
+    }
+
+    function failedValidation(ValidationValidator $validator)
+    {
+        $errors = (new ValidationException($validator))->errors();
+
+        throw new HttpResponseException(response()->json(
+            [
+                'error' => $errors,
+                'status' => 422, // erros validate
+            ],
+            200 // success
+        ));
     }
 }

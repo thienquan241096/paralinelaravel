@@ -21,8 +21,8 @@ class TeamRepository extends AbstractRepository implements InterfaceTeamReposito
         return $this->model->where('group_id', $parent_id)->update($attributes);
     }
 
-    public function search($keyword)
+    public function searchTeam($keyword, $group_id)
     {
-        return 1;
+        return $this->model->where('name', 'like', '%' . "$keyword" . '%')->where('del_flag', '=', 0)->orderByDesc('id')->Group_id($group_id);
     }
 }

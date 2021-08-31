@@ -2,8 +2,12 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator as ValidationValidator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
+
 
 class GroupFormRequest extends FormRequest
 {
@@ -30,5 +34,28 @@ class GroupFormRequest extends FormRequest
                 'min:3', 'max:128', Rule::unique('m_groups')->ignore($this->id)
             ]
         ];
+    }
+
+    // public function messages()
+    // {
+    //     return [
+    //         'name.required' => 'k để trống',
+    //         'name.min' => 'ít nhất 3 kí tự',
+    //         'name.max' => 'tối đa 128 kí tự',
+    //         'name.unique' => 'tên đã có',
+    //     ];
+    // }
+
+    function failedValidation(ValidationValidator $validator)
+    {
+        $errors = (new ValidationException($validator))->errors();
+
+        throw new HttpResponseException(response()->json(
+            [
+                'error' => $errors,
+                'status' => 422, // erros validate
+            ],
+            200 // success
+        ));
     }
 }

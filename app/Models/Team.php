@@ -14,6 +14,12 @@ class Team extends Model
         'name', 'group_id', 'ins_id', 'upd_id', 'del_flag',
     ];
 
+    // áp dụng cứng lẫn mềm
+    public function scopeGroup_id($query, $group_id)
+    {
+        return $query->where('group_id', '=', $group_id);
+    }
+
     public function m_groups()
     {
         return $this->belongsTo(Group::class, 'group_id', 'id');
@@ -21,6 +27,6 @@ class Team extends Model
 
     public function m_employees()
     {
-        return $this->hasMany(Group::class, 'team_id', 'id');
+        return $this->hasMany(Employee::class, 'team_id', 'id');
     }
 }

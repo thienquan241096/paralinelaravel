@@ -14,9 +14,10 @@
 @endif
 <div class="row">
     <div class="col-md-10">
-        <form action="" method="GET">
+        <form action="{{ route('admin.group.search') }}" method="GET">
             <div class="input-group">
-                <input type="search" class="form-control form-control-lg" placeholder="what do you search ...?">
+                <input type="text" class="form-control form-control-lg" name='keyword'
+                    placeholder="what do you search ...?">
                 <div class="input-group-append">
                     <button type="submit" class="btn btn-lg btn-default">
                         <i class="fa fa-search"></i>
@@ -61,6 +62,7 @@
         </tbody>
     </table>
 </div>
+{{ $groups->links() }}
 <div class="modal modal-danger fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

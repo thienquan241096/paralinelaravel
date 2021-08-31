@@ -12,11 +12,27 @@
     </p>
 </div>
 @endif
+<div id="success_message"></div>
 <div class="row">
     <div class="col-md-10">
-        <form action="" method="GET">
+        <form action="{{ route('admin.employee.search') }}" method="GET">
             <div class="input-group">
-                <input type="search" class="form-control form-control-lg" placeholder="what do you search ...?">
+                <input type="search" name="keywordName" class="form-control form-control-lg"
+                    placeholder="search by name...?">
+                <input type="search" name="keywordEmail" class="form-control form-control-lg"
+                    placeholder="search by email...?">
+                <select class="form-control form-control-lg" name="team_id" id="">
+                    <option>Choose Team</option>
+                    @foreach ($teams as $team)
+                    <option value="{{$team->id}}">{{$team->name}}</option>
+                    @endforeach
+                </select>
+                <select class="form-control form-control-lg" name="group_id" id="">
+                    <option>Choose Group</option>
+                    @foreach ($groups as $group)
+                    <option value="{{$group->id}}">{{$group->name}}</option>
+                    @endforeach
+                </select>
                 <div class="input-group-append">
                     <button type="submit" class="btn btn-lg btn-default">
                         <i class="fa fa-search"></i>
@@ -45,7 +61,7 @@
             @foreach ($employees as $employee)
             <tr>
                 <td scope="row">{{$employee->id}}</td>
-                <td scope="row">{{$employee->first_name}}</td>
+                <td scope="row">{{$employee->full_name}}</td>
                 <td scope="row">{{$employee->m_teams->name}}</td>
                 <td scope="row">
                     <img src="{{ asset('storage/'.$employee->avatar) }}" width="100px" alt="">
@@ -67,6 +83,7 @@
         </tbody>
     </table>
 </div>
+{{ $employees->links() }}
 <div class="modal modal-danger fade" id="deleteemployee" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

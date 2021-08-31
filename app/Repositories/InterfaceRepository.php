@@ -6,6 +6,8 @@ interface InterfaceRepository
 {
     public function all();
 
+    public function getAll();
+
     public function create($attributes = []);
 
     public function findByID($id);
@@ -17,5 +19,8 @@ interface InterfaceRepository
     public function search($keywword);
 
     public function fill($attributes = []);
+
+    public function get($keyword);
+
     public function save();
 }

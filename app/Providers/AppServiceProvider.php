@@ -9,6 +9,7 @@ use App\Repositories\GroupRepositories\InterfaceGroupRepository;
 use App\Repositories\TeamRepositories\InterfaceTeamRepository;
 use App\Repositories\TeamRepositories\TeamRepository;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -42,5 +43,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+        Paginator::useBootstrap();
     }
 }

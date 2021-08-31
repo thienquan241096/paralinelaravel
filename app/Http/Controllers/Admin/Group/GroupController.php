@@ -6,8 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\GroupFormRequest;
 use App\Repositories\GroupRepositories\InterfaceGroupRepository;
 use App\Repositories\TeamRepositories\InterfaceTeamRepository;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class GroupController extends Controller
 {
@@ -21,9 +22,15 @@ class GroupController extends Controller
         $this->team = $team;
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $groups = $this->group->all();
+        return view('admin.group.index', compact('groups'));
+    }
+
+    public function getSearch(Request $request)
+    {
+        $groups = $this->group->get($request->keyword);
         return view('admin.group.index', compact('groups'));
     }
 
@@ -40,8 +47,13 @@ class GroupController extends Controller
 
     public function postAdd(GroupFormRequest $request)
     {
+
         $this->group->create($request->all());
-        return redirect()->route('admin.group.index')->with('message', 'Create success');
+        // return redirect()->route('admin.group.index')->with('message', 'Create success');
+        return response()->json([
+            'status' => 200,
+            'message' => 'Create success'
+        ]);
     }
 
     public function getEdit(Request $request)
@@ -52,8 +64,12 @@ class GroupController extends Controller
 
     public function postEdit(GroupFormRequest $request)
     {
+        // dd($request->id);
         $this->group->update($request->id, $request->all());
-        return redirect()->route('admin.group.index')->with('message', 'Update success');
+        return response()->json([
+            'status' => 200,
+            'message' => 'Update success'
+        ]);
     }
 
     public function delete(Request $request)
@@ -61,7 +77,6 @@ class GroupController extends Controller
         $data = Config::get('common.DEL_FLAG');
         $this->team->deleteTeamByGroupID($request->id, $data);
         $this->group->delete($request->id, $data);
-
         return redirect()->route('admin.group.index')->with('message', 'Delete success');
     }
 }

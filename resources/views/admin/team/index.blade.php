@@ -12,9 +12,17 @@
 @endif
 <div class="row">
     <div class="col-md-10">
-        <form action="" method="GET">
+        <form action="{{ route('admin.team.search') }}" method="GET">
             <div class="input-group">
-                <input type="search" class="form-control form-control-lg" placeholder="what do you search ...?">
+                <input type="text" class="form-control form-control-lg" name="keyword"
+                    placeholder="what do you search ...?">
+                <select class="form-control form-control-lg" name="group_id" id="">
+                    <option value="0">Choose group</option>
+                    @foreach ($groups as $group)
+                    <option value="{{$group->id}}">{{$group->name}}
+                    </option>
+                    @endforeach
+                </select>
                 <div class="input-group-append">
                     <button type="submit" class="btn btn-lg btn-default">
                         <i class="fa fa-search"></i>
@@ -61,6 +69,7 @@
         </tbody>
     </table>
 </div>
+{{ $teams->links() }}
 <div class="modal modal-danger fade" id="deleteTeam" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

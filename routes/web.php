@@ -24,13 +24,16 @@ Route::get('/', function () {
 
 Route::prefix('/admin')->name('admin.')->group(function () {
     Route::get('/login', [LoginControler::class, 'index'])->name('getLogin');
+    Route::post('/login', [LoginControler::class, 'postLogin'])->name('postLogin');
+    Route::get('/logout', [LoginControler::class, 'getLogout'])->name('getLogout');
 
-    Route::name('dashboard.')->group(function () {
+    Route::name('dashboard.')->middleware('checkLogin')->group(function () {
         Route::get('/dashboard', [DashBoardController::class, 'index'])->name('index');
     });
 
-    Route::prefix('group')->name('group.')->group(function () {
+    Route::prefix('group')->name('group.')->middleware('checkLogin')->group(function () {
         Route::get('/', [GroupController::class, 'index'])->name('index');
+        Route::get('/search', [GroupController::class, 'getSearch'])->name('search');
 
         Route::get('/view', [GroupController::class, 'view'])->name('view');
 
@@ -43,8 +46,9 @@ Route::prefix('/admin')->name('admin.')->group(function () {
         Route::get('/delete', [GroupController::class, 'delete'])->name('getDelete');
     });
 
-    Route::prefix('team')->name('team.')->group(function () {
+    Route::prefix('team')->name('team.')->middleware('checkLogin')->group(function () {
         Route::get('/', [TeamController::class, 'index'])->name('index');
+        Route::get('/search', [TeamController::class, 'getSearch'])->name('search');
 
         Route::get('/view', [TeamController::class, 'view'])->name('view');
 
@@ -57,8 +61,9 @@ Route::prefix('/admin')->name('admin.')->group(function () {
         Route::get('/delete', [TeamController::class, 'delete'])->name('getDelete');
     });
 
-    Route::prefix('employee')->name('employee.')->group(function () {
+    Route::prefix('employee')->name('employee.')->middleware('checkLogin')->group(function () {
         Route::get('/', [EmployeeController::class, 'index'])->name('index');
+        Route::get('/search', [EmployeeController::class, 'getSearch'])->name('search');
 
         Route::get('/view', [EmployeeController::class, 'view'])->name('view');
 
