@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Admin\Employee;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EmployeeFormRequest;
+use App\Mail\EmployeeFormMail;
 use App\Repositories\EmployeeRepositories\InterfaceEmployeeRepository;
 use App\Repositories\GroupRepositories\InterfaceGroupRepository;
 use App\Repositories\TeamRepositories\InterfaceTeamRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Mail;
 
 class EmployeeController extends Controller
 {
@@ -26,7 +28,7 @@ class EmployeeController extends Controller
 
     public function index()
     {
-        $employees = $this->employee->all();
+        $employees = $this->employee->paginate();
         $teams = $this->team->getAll();
         $groups = $this->group->getAll();
         $teams->load('m_groups');
@@ -36,15 +38,23 @@ class EmployeeController extends Controller
 
     public function getSearch(Request $request)
     {
-        // $employees = $this->employee->all();
+        $keywordName = $request->keywordName;
+        $keywordEmail = $request->keywordEmail;
         $teams = $this->team->getAll();
         $groups = $this->group->getAll();
-        $employees = $this->employee->search($request->keywordName);
-        if ($request->keywordEmail != "") {
-            $employees->email($request->keywordEmail);
+        $query = $this->employee->search($keywordName);
+
+        if ($keywordEmail != "") {
+            $query->email($keywordEmail);
         }
-        // $employees
-        $teams->load('m_groups');
+        if ($request->team_id > 0) {
+            $query->teamid($request->team_id);
+        }
+        if ($request->group_id > 0) {
+            $ListTeam = $this->team->search("")->Group_id($request->group_id)->get();
+            $query->whereIn('team_id', $ListTeam);
+        }
+        $employees = $query->paginate(5);
         $employees->load('m_teams');
         return view('admin.employee.index', compact('employees', 'teams', 'groups'));
     }
@@ -85,6 +95,7 @@ class EmployeeController extends Controller
             'status' => $request->status,
             'type_of_work' => $request->type_of_work,
         ];
+        Mail::to('quannh.paraline@gmail.com')->send(new EmployeeFormMail($data));
         $this->employee->create($data);
         return response()->json([
             'status' => 200,

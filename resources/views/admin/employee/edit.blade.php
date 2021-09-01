@@ -205,10 +205,10 @@
                         
                     }else if(response.status ==200){
                         $('#exampleModal').modal('hide');
-                        // window.location.href= 'http://127.0.0.1:8000/admin/employee/';
+                        // window.location.reload();
+                        window.location.href= 'http://127.0.0.1:8000/admin/employee/';
                         $('#success_message').addClass('alert alert-success');
                         $('#success_message').text(response.message);
-                        window.location.reload();
 
                     }
                 },

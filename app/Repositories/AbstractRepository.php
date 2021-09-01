@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 define('DEL_FLAG', 0);
+define('NUMBER', 3);
 
 use Illuminate\Support\Facades\Auth;
 
@@ -22,9 +23,9 @@ abstract class AbstractRepository implements InterfaceRepository
         $this->model = $this->getModel();
     }
 
-    public function all()
+    public function paginate()
     {
-        return $this->model->where('del_flag', '=', DEL_FLAG)->paginate(3);
+        return $this->model->where('del_flag', '=', DEL_FLAG)->paginate(NUMBER);
     }
 
     public function getAll()
@@ -34,9 +35,9 @@ abstract class AbstractRepository implements InterfaceRepository
 
     public function create($attributes = [])
     {
-        $attributes['ins_id'] = 1;
-        $attributes['upd_id'] = 1;
-        $attributes['del_flag'] = 0;
+        $attributes['ins_id'] = Auth::user()->id;
+        $attributes['upd_id'] = Auth::user()->id;
+        $attributes['del_flag'] = DEL_FLAG;
         return $this->model->create($attributes);
     }
 
@@ -47,7 +48,7 @@ abstract class AbstractRepository implements InterfaceRepository
 
     public function update($id, array $attributes)
     {
-        $attributes['upd_id'] = 1;
+        $attributes['upd_id'] = Auth::user()->id;
         $findResult = $this->findByID($id);
         if (!$findResult) {
             return false;
@@ -58,16 +59,16 @@ abstract class AbstractRepository implements InterfaceRepository
 
     public function fill($attributes = [])
     {
-        $attributes['ins_id'] = 1;
-        $attributes['upd_id'] = 1;
-        $attributes['del_flag'] = 0;
+        $attributes['ins_id'] = Auth::user()->id;
+        $attributes['upd_id'] = Auth::user()->id;
+        $attributes['del_flag'] = DEL_FLAG;
         $result = $this->model->fill($attributes);
         return $result;
     }
 
     public function delete($id, $attributes = [])
     {
-        $attributes['upd_id'] = 1;
+        $attributes['upd_id'] = Auth::user()->id;
         $findResult = $this->findByID($id);
         if (!$findResult) {
             return false;

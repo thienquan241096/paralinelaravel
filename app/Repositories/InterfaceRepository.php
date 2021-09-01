@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 interface InterfaceRepository
 {
-    public function all();
+    public function paginate();
 
     public function getAll();
 

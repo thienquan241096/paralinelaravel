@@ -20,10 +20,15 @@ class Employee extends Model
 
     public function scopeEmail($query, $email)
     {
-        return $query->where('group_id', '=', $email);
+        return $query->where('email', 'like', "%" . $email . "%");
     }
 
-    public function getFullNameAttribute()
+    public function scopeTeamId($query, $team_id)
+    {
+        return $query->where('team_id', '=', $team_id);
+    }
+
+    public function getNameAttribute()
     {
         return ucfirst($this->first_name) . " " . ucfirst($this->last_name);
     }

@@ -25,7 +25,7 @@ class TeamController extends Controller
 
     public function index()
     {
-        $teams = $this->team->all();
+        $teams = $this->team->paginate();
         $teams->load('m_groups');
         $groups = $this->group->getAll();
         return view('admin.team.index', compact('teams', 'groups'));
@@ -35,10 +35,11 @@ class TeamController extends Controller
     {
         $keyword = $request->keyword;
         $group_id = $request->group_id;
-        $teams = $this->team->search($keyword)->paginate(3);
+        $query = $this->team->search($keyword);
         if ($group_id > 0) {
-            $teams = $this->team->searchTeam($keyword, $group_id)->paginate(3);
+            $query->Group_id($group_id);
         }
+        $teams = $query->paginate(3);
         $teams->load('m_groups');
         $groups = $this->group->getAll();
         return view('admin.team.index', compact('teams', 'groups'));

@@ -22,7 +22,7 @@
                 <input type="search" name="keywordEmail" class="form-control form-control-lg"
                     placeholder="search by email...?">
                 <select class="form-control form-control-lg" name="team_id" id="">
-                    <option>Choose Team</option>
+                    <option value="0">Choose Team</option>
                     @foreach ($teams as $team)
                     <option value="{{$team->id}}">{{$team->name}}</option>
                     @endforeach
@@ -52,6 +52,7 @@
                 <th>#</th>
                 <th>name</th>
                 <th>employee name</th>
+                <th>email</th>
                 <th>Avatar</th>
                 <th>Action</th>
 
@@ -61,8 +62,9 @@
             @foreach ($employees as $employee)
             <tr>
                 <td scope="row">{{$employee->id}}</td>
-                <td scope="row">{{$employee->full_name}}</td>
+                <td scope="row">{{$employee->name}}</td>
                 <td scope="row">{{$employee->m_teams->name}}</td>
+                <td scope="row">{{$employee->email}}</td>
                 <td scope="row">
                     <img src="{{ asset('storage/'.$employee->avatar) }}" width="100px" alt="">
                 </td>

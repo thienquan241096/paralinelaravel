@@ -136,7 +136,7 @@
    $('#form').submit(function (e) { 
         e.preventDefault();
         var formData = new FormData(this);
-        console.log(formData);
+        // console.log(formData);
        $('#exampleModal').modal('show');
        $('.btnYes').click(function (e) { 
            e.preventDefault();
@@ -152,7 +152,6 @@
                     console.log(response);
                     if (response.status == 422) {
                         $('#exampleModal').modal('hide');
-                        
                         if(response.error.email){
                             $('#input-email-error').text(response.error.email);
                         }else{
@@ -197,13 +196,12 @@
                             $('#image-input-error').text("");
                         }
                         
-                    }else if(response.status ==200){
+                    }else if(response.status == 200){
                         $('#exampleModal').modal('hide');
-                        // window.location.href= 'http://127.0.0.1:8000/admin/employee/';
+                        window.location.href= 'http://127.0.0.1:8000/admin/employee/';
                         $('#success_message').addClass('alert alert-success');
                         $('#success_message').text(response.message);
-                        window.location.reload();
-
+                        // window.location.reload();
                     }
                 },
             });

@@ -4,6 +4,7 @@ namespace App\Repositories\TeamRepositories;
 
 use App\Models\Team;
 use App\Repositories\AbstractRepository;
+use Illuminate\Support\Facades\Auth;
 
 class TeamRepository extends AbstractRepository implements InterfaceTeamRepository
 {
@@ -14,15 +15,10 @@ class TeamRepository extends AbstractRepository implements InterfaceTeamReposito
 
     public function deleteTeamByGroupID($parent_id, $attributes = [])
     {
-        $attributes['upd_id'] = 1;
+        $attributes['upd_id'] = Auth::user()->id;
         if (!$parent_id) {
             return false;
         }
         return $this->model->where('group_id', $parent_id)->update($attributes);
-    }
-
-    public function searchTeam($keyword, $group_id)
-    {
-        return $this->model->where('name', 'like', '%' . "$keyword" . '%')->where('del_flag', '=', 0)->orderByDesc('id')->Group_id($group_id);
     }
 }

@@ -24,7 +24,7 @@ class GroupController extends Controller
 
     public function index(Request $request)
     {
-        $groups = $this->group->all();
+        $groups = $this->group->paginate();
         return view('admin.group.index', compact('groups'));
     }
 
@@ -47,9 +47,7 @@ class GroupController extends Controller
 
     public function postAdd(GroupFormRequest $request)
     {
-
         $this->group->create($request->all());
-        // return redirect()->route('admin.group.index')->with('message', 'Create success');
         return response()->json([
             'status' => 200,
             'message' => 'Create success'
@@ -64,7 +62,6 @@ class GroupController extends Controller
 
     public function postEdit(GroupFormRequest $request)
     {
-        // dd($request->id);
         $this->group->update($request->id, $request->all());
         return response()->json([
             'status' => 200,
