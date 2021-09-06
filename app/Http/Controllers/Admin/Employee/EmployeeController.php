@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Employee;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EmployeeFormRequest;
+use App\Jobs\JobEmployeeFormMail;
 use App\Mail\EmployeeFormMail;
 use App\Repositories\EmployeeRepositories\InterfaceEmployeeRepository;
 use App\Repositories\GroupRepositories\InterfaceGroupRepository;
@@ -95,8 +96,10 @@ class EmployeeController extends Controller
             'status' => $request->status,
             'type_of_work' => $request->type_of_work,
         ];
-        Mail::to('quannh.paraline@gmail.com')->send(new EmployeeFormMail($data));
+        // Mail::to('quannh.paraline@gmail.com')->send(new EmployeeFormMail($data));
+
         $this->employee->create($data);
+        JobEmployeeFormMail::dispatch($data);
         return response()->json([
             'status' => 200,
             'message' => 'Create success'
