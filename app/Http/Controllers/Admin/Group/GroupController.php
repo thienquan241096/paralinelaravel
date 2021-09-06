@@ -50,7 +50,7 @@ class GroupController extends Controller
         $this->group->create($request->all());
         return response()->json([
             'status' => 200,
-            'message' => 'Create success'
+            'message' => 'Create Success'
         ]);
     }
 

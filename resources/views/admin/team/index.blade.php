@@ -13,20 +13,27 @@
 <div class="row">
     <div class="col-md-10">
         <form action="{{ route('admin.team.search') }}" method="GET">
-            <div class="input-group">
-                <input type="text" class="form-control form-control-lg" name="keyword"
-                    placeholder="what do you search ...?">
-                <select class="form-control form-control-lg" name="group_id" id="">
-                    <option value="0">Choose group</option>
-                    @foreach ($groups as $group)
-                    <option value="{{$group->id}}">{{$group->name}}
-                    </option>
-                    @endforeach
-                </select>
-                <div class="input-group-append">
-                    <button type="submit" class="btn btn-lg btn-default">
-                        <i class="fa fa-search"></i>
-                    </button>
+            <div class="row">
+                <div class="col-md-1"><label for="name">Name</label></div>
+                <div class="col-md-4">
+                    <input type="search" name="keyword" class="form-control">
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-1"><label for="name">Group</label></div>
+                <div class="col-md-4">
+                    <select class="form-control" name="group_id" id="">
+                        <option value="0">Choose group</option>
+                        @foreach ($groups as $group)
+                        <option value="{{$group->id}}">{{$group->name}}
+                        </option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 mt-3 mb-3">
+                    <button type="submit" class="btn btn-success">Search</button>
                 </div>
             </div>
         </form>

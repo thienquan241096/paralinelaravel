@@ -112,7 +112,7 @@ class EmployeeController extends Controller
 
     public function postEdit(EmployeeFormRequest $request)
     {
-        if ($request->avatar == "") {
+        if ($request->avatar == null) {
             $avatar = $this->employee->findByID($request->id)->avatar;
         } else {
             $newFileName = uniqid() . '-' . $request->avatar->getClientOriginalName();

@@ -30,7 +30,8 @@ class EmployeeFormRequest extends FormRequest
     {
         $formRules = [
             'email' => [
-                'required', 'max:128', 'email',
+                'required',
+                'max:128', 'email',
                 Rule::unique('m_employees')->ignore($this->id)
             ],
             'first_name' => [

@@ -38,7 +38,7 @@
                         </div>
                     </div>
                     @error('email')
-                    <p class="alert alert-danger">{{$message}}</p>
+                    <p class="text-danger">{{$message}}</p>
                     @enderror
                     <div class="input-group mb-3">
                         <input type="password" name="password" class="form-control" placeholder="Password">
@@ -49,7 +49,7 @@
                         </div>
                     </div>
                     @error('password')
-                    <p class="alert alert-danger">{{$message}}</p>
+                    <p class="text-danger">{{$message}}</p>
                     @enderror
                     <div>
                         <button type="submit" class="btn btn-primary btn-block">Sign In</button>
@@ -57,7 +57,7 @@
             </div>
             </form>
             @if (Session::has('messages'))
-            <p class="alert alert-danger text-center">
+            <p class="text-danger text-center">
                 {{ Session::get('messages') }}
             </p>
             @endif

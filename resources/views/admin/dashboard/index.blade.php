@@ -9,7 +9,7 @@ INDEX DASBOARD
 @endif
 
 @if (Session::has('messages'))
-<p class="alert alert-success">
+<p class="text-success">
     {{ Session::get('messages') }}
 </p>
 @endif

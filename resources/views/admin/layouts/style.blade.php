@@ -19,3 +19,4 @@
 <link rel="stylesheet" href="{{asset('adminlte/plugins/daterangepicker/daterangepicker.css')}}">
 <!-- summernote -->
 <link rel="stylesheet" href="{{asset('adminlte/plugins/summernote/summernote-bs4.min.css')}}">
+<link rel="stylesheet" href="{{ asset('css/style.css') }}">

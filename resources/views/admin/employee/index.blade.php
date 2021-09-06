@@ -13,38 +13,54 @@
 </div>
 @endif
 <div id="success_message"></div>
-<div class="row">
-    <div class="col-md-10">
-        <form action="{{ route('admin.employee.search') }}" method="GET">
-            <div class="input-group">
-                <input type="search" name="keywordName" class="form-control form-control-lg"
-                    placeholder="search by name...?">
-                <input type="search" name="keywordEmail" class="form-control form-control-lg"
-                    placeholder="search by email...?">
-                <select class="form-control form-control-lg" name="team_id" id="">
-                    <option value="0">Choose Team</option>
-                    @foreach ($teams as $team)
-                    <option value="{{$team->id}}">{{$team->name}}</option>
-                    @endforeach
-                </select>
-                <select class="form-control form-control-lg" name="group_id" id="">
-                    <option>Choose Group</option>
-                    @foreach ($groups as $group)
-                    <option value="{{$group->id}}">{{$group->name}}</option>
-                    @endforeach
-                </select>
-                <div class="input-group-append">
-                    <button type="submit" class="btn btn-lg btn-default">
-                        <i class="fa fa-search"></i>
-                    </button>
+<div class="offset-md-10 col-md-2">
+    <a href="{{ route('admin.employee.getAdd') }}" class="btn btn-block btn-success btn-lg">Add employee</a>
+</div>
+<form action="{{ route('admin.employee.search') }}" method="GET">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-1"><label for="name">Name</label></div>
+                <div class="col-md-4">
+                    <input type="search" name="keywordName" class="form-control form-control-lg">
                 </div>
             </div>
-        </form>
+            <div class="row mt-2">
+                <div class="col-md-1"><label for="name">Email</label></div>
+                <div class="col-md-4">
+                    <input type="search" name="keywordEmail" class="form-control form-control-lg">
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-1"><label for="name">Team</label></div>
+                <div class="col-md-4">
+                    <select class="form-control form-control-lg" name="team_id">
+                        <option value="0">Choose Team</option>
+                        @foreach ($teams as $team)
+                        <option value="{{$team->id}}">{{$team->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-1"><label for="name">Group</label></div>
+                <div class="col-md-4">
+                    <select class="form-control form-control-lg" name="group_id">
+                        <option value="0">Choose Group</option>
+                        @foreach ($groups as $group)
+                        <option value="{{$group->id}}">{{$group->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 mt-3 mb-3">
+                    <button class="btn btn-success">Search</button>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-2">
-        <a href="{{ route('admin.employee.getAdd') }}" class="btn btn-block btn-success btn-lg">Add employee</a>
-    </div>
-</div>
+</form>
 <div class="mt-2">
     <table class="table text-center">
         <thead>
@@ -82,6 +98,10 @@
                 </td>
             </tr>
             @endforeach
+            {{-- @if(count($employees) < 0) <tr>
+                <td>Không có dữ liệu</td>
+                </tr>
+                @endif --}}
         </tbody>
     </table>
 </div>
@@ -95,12 +115,7 @@
                 <h4 class="modal-title text-center" id="myModalLabel">Delete Confirmation</h4>
             </div>
             <form action="{{ route('admin.employee.getDelete') }}" method="GET">
-                <div class="modal-body">
-                    <p class="text-center">
-                        Are you sure you want to delete this?
-                    </p>
-                    <input type="hidden" name="id" id="employeeId" value="">
-                </div>
+                <input type="hidden" name="id" id="employeeId" value="">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-success" data-dismiss="modal">No, Cancel</button>
                     <button type="submit" class="btn btn-warning">Yes, Delete</button>

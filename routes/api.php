@@ -20,3 +20,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/delete', [ApiController::class, 'delete']);
+
+Route::get('checkGroup', [ApiController::class, 'checkAddGroup']);
+
+Route::get('checkEditGroup', [ApiController::class, 'checkEditGroup']);
+
+Route::get('checkTeam', [ApiController::class, 'checkAddTeam']);
+
+Route::get('checkEditTeam', [ApiController::class, 'checkEditTeam']);
+
+Route::post('checkEmployee', [ApiController::class, 'checkAddEmployee']);
+
+Route::post('checkEditEmployee', [ApiController::class, 'checkEditEmployee']);

@@ -5,8 +5,7 @@
 @section('content')
 <div id="success_message"></div>
 <form method="post" id="form" enctype="multipart/form-data">
-    {{-- action="{{ route('admin.employee.postAdd') }}" --}}
-    {{ csrf_field() }}
+    @csrf
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
@@ -49,7 +48,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label for="">Name team</label>
-                <select class="form-control team_id" name="team_id" id="">
+                <select class="form-control team_id" name="team_id">
                     @foreach ($teams as $team)
                     <option value="{{$team->id}}" @if($team->id == old('team_id')) selected @endif>{{$team->name}}
                     </option>
@@ -91,30 +90,92 @@
             </div>
             <div class="form-group">
                 <label for="">avatar</label>
-                <input type="file" class="form-control-file avatar" name="avatar">
+                <input type="file" class="form-control-file avatar" id="image" name="avatar">
+                <input type="hidden" class="avatar_hidden">
+                <img id="blah" src="" width="100px" class="mt-2" />
+
                 <span class="text-danger" id="image-input-error"></span>
-                @error('avatar')
-                <span class="text-danger">{{$message}}</span>
-                @enderror
             </div>
         </div>
     </div>
-    <button type="submit" class="btn btn-primary btn-submit" data-route="{{ route('admin.employee.postAdd') }}"
-        data-target="#exampleModal">Add new
+    <button type="submit" class="btn btn-primary" data-target="#exampleModal">Add new
         employee</button>
 </form>
+
+<div id="add-confirm">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="">Email :</label>
+                <span class="confirm-email"></span>
+            </div>
+            <div class="form-group">
+                <label>last_name :</label>
+                <span class="confirm-last_name"></span>
+            </div>
+            <div class="form-group">
+                <label>first_name :</label>
+                <span class="confirm-first_name"></span>
+            </div>
+
+            <div class="form-group">
+                <label>birthday</label>
+                <span class="confirm-birthday"></span>
+            </div>
+
+            <div class="form-group">
+                <label>address :</label>
+                <span class="confirm-address"></span>
+            </div>
+
+            <div class="form-group">
+                <label>salary :</label>
+                <span class="confirm-salary"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="">Name team :</label>
+                <span class="confirm-team_id"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="">Positon :</label>
+                <span class="confirm-position"></span>
+            </div>
+            <div class="form-group">
+                <label for="">Type of work :</label>
+                <span class="confirm-type_of_work"></span>
+            </div>
+            <div class="form-group">
+                <label for="">Gender</label>
+                <span class="confirm-gender"></span>
+            </div>
+            <div class="form-group">
+                <label for="">STATUS</label>
+                <span class="confirm-status"></span>
+            </div>
+            <div class="form-group">
+                <label for="">Avatar</label>
+                <img id="confirm-blah" src="" width="100px" class="mt-2" />
+            </div>
+        </div>
+    </div>
+    <input type=" button" class="btn btn-primary back" value="Back">
+    <button type="submit" class="btn btn-primary add" data-target="#exampleModal">Add new</button>
+</div>
+
+
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add new group ?</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Add new employee ?</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-            </div>
-            <div class="modal-body">
-                Are you sure ?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
@@ -127,31 +188,69 @@
 @endsection
 @section('script')
 <script>
-    $(document).ready(function () {
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#blah').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]); // convert to base64 string
+            }
         }
-    });
-   $('#form').submit(function (e) { 
-        e.preventDefault();
-        var formData = new FormData(this);
-        // console.log(formData);
-       $('#exampleModal').modal('show');
-       $('.btnYes').click(function (e) { 
-           e.preventDefault();
-           var route = $(this).data('route');
-           $.ajax({
-                type:'POST',
-                url: route,
-                data: formData,
+        $(document).ready(function() {
+            $("#image").change(function(e) {
+                readURL(this);
+                console.log(this.files);
+                $('.avatar_hidden').val(this.files);
+            });
+        });
+</script>
+<script>
+    $(document).ready(function () {
+        $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+        });
+
+        $('#form').submit(function (e) { 
+            e.preventDefault();
+            var newFormData = new FormData(this);
+            var selectTeamName = [];
+            $('.team_id :selected').each(function(i, selected){ 
+                selectTeamName[i] = $(selected).text(); 
+            });
+
+            var selectPosition = [];
+            $('.position :selected').each(function(i, selected){ 
+                selectPosition[i] = $(selected).text(); 
+            });
+
+            var selectTypeOfWork = [];
+            $('.type_of_work :selected').each(function(i, selected){ 
+                selectTypeOfWork[i] = $(selected).text(); 
+            });
+            
+            var selectGender = [];
+            $('.gender :selected').each(function(i, selected){ 
+                selectGender[i] = $(selected).text(); 
+            });
+
+            var selectStatus = [];
+            $('.status :selected').each(function(i, selected){ 
+                selectStatus[i] = $(selected).text(); 
+            });
+            
+            var srcBlah = $('#blah').attr('src');
+            $.ajax({
+                type: "POST",
+                url: "/api/checkEmployee",
+                data: newFormData,
                 contentType: false,
                 processData: false,
-                //    dataType: "json",
-                success: (response) => {
-                    console.log(response);
-                    if (response.status == 422) {
-                        $('#exampleModal').modal('hide');
+                success: function (response) {
+                    // console.log(response);
+                    if(response.status == 422){
                         if(response.error.email){
                             $('#input-email-error').text(response.error.email);
                         }else{
@@ -195,18 +294,78 @@
                         }else{
                             $('#image-input-error').text("");
                         }
-                        
-                    }else if(response.status == 200){
-                        $('#exampleModal').modal('hide');
-                        window.location.href= 'http://127.0.0.1:8000/admin/employee/';
-                        $('#success_message').addClass('alert alert-success');
-                        $('#success_message').text(response.message);
-                        // window.location.reload();
+
+                    }else{
+                        $('#form').css('display','none');
+                        $('#input-email-error').text("");
+                        $('#input-last_name-error').text("");
+                        $('#input-first_name-error').text("");
+                        $('#input-birthday-error').text("");
+                        $('#input-address-error').text("");
+                        $('#input-salary-error').text("");
+                        $('#image-input-error').text("");
+
+                        $('#add-confirm').css('display','block');
+                        $('.confirm-email').text($('.email').val());
+                        $('.confirm-last_name').text($('.last_name').val());
+                        $('.confirm-first_name').text($('.first_name').val());
+                        $('.confirm-birthday').text($('.birthday').val());
+                        $('.confirm-address').text($('.address').val());
+                        $('.confirm-salary').text($('.salary').val());
+                        // $('.confirm-team_id').val($('.team_id').val());
+                        $('.confirm-team_id').text(selectTeamName);
+                        // $('.confirm-position').val($('.position').val());
+                        $('.confirm-position').text(selectPosition);
+                        // $('.confirm-type_of_work').val($('.type_of_work').val());
+                        $('.confirm-type_of_work').text(selectTypeOfWork);
+                        // $('.confirm-gender').val($('.gender').val());
+                        $('.confirm-gender').text(selectGender);
+                        // $('.confirm-status').val($('.status').val());
+                        $('.confirm-status').text(selectStatus);
+                        $("#confirm-blah").attr("src",srcBlah);
+
+                        $('.back').click(function (e) { 
+                            e.preventDefault();
+                            $('#form').css('display','block');
+                            $('#add-confirm').css('display','none');
+                        });
                     }
-                },
+                }
             });
-       });
-   });
-});
+        });
+
+        $('.add').click(function (e) { 
+            e.preventDefault();
+            console.log($('#image')[0].files[0])
+            $('#exampleModal').modal('show');
+            var formData = new FormData($('#form')[0]);
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+                $('.btnYes').click(function (e) { 
+                    e.preventDefault();
+                    var route = $(this).data('route');
+                    $.ajax({
+                        type: "POST",
+                        url: route,
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function (response) {
+                            console.log(response);
+                            if(response.status == 200){
+                                $('#exampleModal').modal('hide');
+                                window.location.href= 'http://127.0.0.1:8000/admin/employee/';
+                                $('#success_message').addClass('text-success');
+                                $('#success_message').text(response.message);
+                            }
+                        }
+                    });
+                });
+        });
+        
+    });
 </script>
 @endsection

@@ -36,16 +36,6 @@ class GroupFormRequest extends FormRequest
         ];
     }
 
-    // public function messages()
-    // {
-    //     return [
-    //         'name.required' => 'k để trống',
-    //         'name.min' => 'ít nhất 3 kí tự',
-    //         'name.max' => 'tối đa 128 kí tự',
-    //         'name.unique' => 'tên đã có',
-    //     ];
-    // }
-
     function failedValidation(ValidationValidator $validator)
     {
         $errors = (new ValidationException($validator))->errors();

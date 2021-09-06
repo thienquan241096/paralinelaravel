@@ -25,12 +25,12 @@ abstract class AbstractRepository implements InterfaceRepository
 
     public function paginate()
     {
-        return $this->model->where('del_flag', '=', DEL_FLAG)->paginate(NUMBER);
+        return $this->model->where('del_flag', '=', DEL_FLAG)->orderByDesc('id')->paginate(NUMBER);
     }
 
     public function getAll()
     {
-        return $this->model->where('del_flag', '=', DEL_FLAG)->get();
+        return $this->model->where('del_flag', '=', DEL_FLAG)->orderByDesc('id')->get();
     }
 
     public function create($attributes = [])

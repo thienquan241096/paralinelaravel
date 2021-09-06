@@ -15,16 +15,19 @@
 <div class="row">
     <div class="col-md-10">
         <form action="{{ route('admin.group.search') }}" method="GET">
-            <div class="input-group">
-                <input type="text" class="form-control form-control-lg" name='keyword'
-                    placeholder="what do you search ...?">
-                <div class="input-group-append">
-                    <button type="submit" class="btn btn-lg btn-default">
-                        <i class="fa fa-search"></i>
-                    </button>
+            <div class="row">
+                <div class="col-md-1"><label for="name">Name</label></div>
+                <div class="col-md-4">
+                    <input type="search" name="keyword" class="form-control">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 mt-3 mb-3">
+                    <button type="submit" class="btn btn-success">Search</button>
                 </div>
             </div>
         </form>
+
     </div>
     <div class="col-md-2">
         <a href="{{ route('admin.group.getAdd') }}" class="btn btn-block btn-success btn-lg">Add group</a>
@@ -34,8 +37,8 @@
     <table class="table text-center">
         <thead>
             <tr>
-                <th>#</th>
-                <th>name</th>
+                <th>Id</th>
+                <th>Name</th>
                 <th>Action</th>
 
             </tr>
@@ -69,16 +72,11 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title text-center" id="myModalLabel">Delete Confirmation</h4>
+                <h4 class="text-center" id="myModalLabel">Delete Confirmation</h4>
             </div>
             <form action="{{ route('admin.group.getDelete') }}" method="GET">
-                <div class="modal-body">
-                    <p class="text-center">
-                        Are you sure you want to delete this?
-                    </p>
-                    <input type="hidden" name="id" id="groupid" value="">
-                </div>
-                <div class="modal-footer">
+                <input type="hidden" name="id" id="groupid" value="">
+                <div class="modal-footer justify-content-center">
                     <button type="button" class="btn btn-success" data-dismiss="modal">No, Cancel</button>
                     <button type="submit" class="btn btn-warning">Yes, Delete</button>
                 </div>
