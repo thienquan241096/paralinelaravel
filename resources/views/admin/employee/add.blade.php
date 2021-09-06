@@ -14,32 +14,32 @@
                 <span class="text-danger" id="input-email-error"></span>
             </div>
             <div class="form-group">
-                <label>last_name</label>
+                <label>Last name</label>
                 <input type="text" class="form-control last_name" name="last_name" value="{{old('last_name')}}">
                 <span class="text-danger" id="input-last_name-error"></span>
             </div>
 
             <div class="form-group">
-                <label>first_name</label>
+                <label>First name</label>
                 <input type="text" class="form-control first_name" name="first_name" value="{{old('first_name')}}">
                 <span class="text-danger" id="input-first_name-error"></span>
             </div>
 
             <div class="form-group">
-                <label>birthday</label>
+                <label>Birthday</label>
                 <input type="text" class="form-control birthday" name="birthday" value="{{old('birthday')}}"
                     placeholder="YYYY-mm-dd">
                 <span class="text-danger" id="input-birthday-error"></span>
             </div>
 
             <div class="form-group">
-                <label>address</label>
+                <label>Address</label>
                 <input type="text" class="form-control address" name="address" value="{{old('address')}}">
                 <span class="text-danger" id="input-address-error"></span>
             </div>
 
             <div class="form-group">
-                <label>salary</label>
+                <label>Salary</label>
                 <input type="text" class="form-control salary" name="salary" value="{{old('salary')}}">
                 <span class="text-danger" id="input-salary-error"></span>
             </div>
@@ -81,7 +81,7 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="">STATUS</label>
+                <label for="">Status</label>
                 <select class="form-control status" name="status">
                     @foreach (Config::get('common.STATUS') as $key => $value)
                     <option value="{{$key}}" @if($key==old('status')) selected @endif>{{$value}}</option>
@@ -110,26 +110,26 @@
                 <span class="confirm-email"></span>
             </div>
             <div class="form-group">
-                <label>last_name :</label>
+                <label>Last name :</label>
                 <span class="confirm-last_name"></span>
             </div>
             <div class="form-group">
-                <label>first_name :</label>
+                <label>First name :</label>
                 <span class="confirm-first_name"></span>
             </div>
 
             <div class="form-group">
-                <label>birthday</label>
+                <label>Birthday</label>
                 <span class="confirm-birthday"></span>
             </div>
 
             <div class="form-group">
-                <label>address :</label>
+                <label>Address :</label>
                 <span class="confirm-address"></span>
             </div>
 
             <div class="form-group">
-                <label>salary :</label>
+                <label>Salary :</label>
                 <span class="confirm-salary"></span>
             </div>
         </div>

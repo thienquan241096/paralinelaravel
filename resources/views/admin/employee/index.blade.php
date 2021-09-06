@@ -22,19 +22,19 @@
             <div class="row">
                 <div class="col-md-1"><label for="name">Name</label></div>
                 <div class="col-md-4">
-                    <input type="search" name="keywordName" class="form-control form-control-lg">
+                    <input type="search" name="keywordName" class="form-control">
                 </div>
             </div>
             <div class="row mt-2">
                 <div class="col-md-1"><label for="name">Email</label></div>
                 <div class="col-md-4">
-                    <input type="search" name="keywordEmail" class="form-control form-control-lg">
+                    <input type="search" name="keywordEmail" class="form-control">
                 </div>
             </div>
             <div class="row mt-2">
                 <div class="col-md-1"><label for="name">Team</label></div>
                 <div class="col-md-4">
-                    <select class="form-control form-control-lg" name="team_id">
+                    <select class="form-control" name="team_id">
                         <option value="0">Choose Team</option>
                         @foreach ($teams as $team)
                         <option value="{{$team->id}}">{{$team->name}}</option>
@@ -45,7 +45,7 @@
             <div class="row mt-2">
                 <div class="col-md-1"><label for="name">Group</label></div>
                 <div class="col-md-4">
-                    <select class="form-control form-control-lg" name="group_id">
+                    <select class="form-control" name="group_id">
                         <option value="0">Choose Group</option>
                         @foreach ($groups as $group)
                         <option value="{{$group->id}}">{{$group->name}}</option>
@@ -66,9 +66,9 @@
         <thead>
             <tr>
                 <th>#</th>
-                <th>name</th>
-                <th>employee name</th>
-                <th>email</th>
+                <th>Name</th>
+                <th>Employee Name</th>
+                <th>Email</th>
                 <th>Avatar</th>
                 <th>Action</th>
 

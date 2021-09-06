@@ -8,18 +8,18 @@ return [
         5 => 'Tester',
     ],
     'TYPE_OF_WORK' => [
-        1 => 'Nhân viên chính thức full time',
-        2 => 'Nhân viên partime',
-        3 => 'Nhân viên thử việc',
-        4 => 'Thực tập sinh'
+        1 => 'Full time official employee',
+        2 => 'Part time staff',
+        3 => 'Probationary staff',
+        4 => 'Intern'
     ],
     'GENDER' => [
-        1 => 'Nam',
-        2 => 'Nữ',
+        1 => 'Male',
+        2 => 'Female',
     ],
     'STATUS' => [
-        1 => 'Đang làm việc',
-        2 => 'Đã nghỉ việc',
+        1 => 'Working',
+        2 => 'Has retired',
     ],
     'DEL_FLAG' => [
         'del_flag' => 1

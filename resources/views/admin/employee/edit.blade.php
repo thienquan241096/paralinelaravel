@@ -1,6 +1,6 @@
 @extends('admin.layouts.index')
 @section('title')
-<h1>Edit TEAM</h1>
+<h1>Edit Employee</h1>
 @endsection
 @section('content')
 <div id="success_message"></div>
@@ -15,14 +15,14 @@
                 <span class="text-danger" id="input-email-error"></span>
             </div>
             <div class="form-group">
-                <label>last_name</label>
+                <label>Last name</label>
                 <input type="text" class="form-control last_name" name="last_name"
                     value="{{old('last_name',$employee->last_name)}}">
                 <span class="text-danger" id="input-last_name-error"></span>
             </div>
 
             <div class="form-group">
-                <label>first_name</label>
+                <label>First name</label>
                 <input type="text" class="form-control first_name" name="first_name"
                     value="{{old('first_name',$employee->first_name)}}">
                 <span class="text-danger" id="input-first_name-error"></span>
@@ -36,14 +36,14 @@
             </div>
 
             <div class="form-group">
-                <label>address</label>
+                <label>Address</label>
                 <input type="text" class="form-control address" name="address"
                     value="{{old('address',$employee->address)}}">
                 <span class="text-danger" id="input-address-error"></span>
             </div>
 
             <div class="form-group">
-                <label>salary</label>
+                <label>Salary</label>
                 <input type="text" class="form-control salary" name="salary"
                     value="{{old('salary',$employee->salary)}}">
                 <span class="text-danger" id="input-salary-error"></span>
@@ -91,7 +91,7 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="">STATUS</label>
+                <label for="">Status</label>
                 <select class="form-control status" name="status">
                     @foreach (Config::get('common.STATUS') as $key => $value)
                     <option value="{{$key}}" @if($key==old('status',$employee->status)) selected @endif>{{$value}}
@@ -100,7 +100,7 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="">avatar</label>
+                <label for="">Avatar</label>
                 <input type="file" class="form-control-file" id="image" name="avatar" value="{{$employee->avatar}}">
                 <img id="blah" src="{{ asset('storage/'.$employee->avatar) }}" alt="" width="100px">
                 <span class="text-danger" id="image-input-error"></span>

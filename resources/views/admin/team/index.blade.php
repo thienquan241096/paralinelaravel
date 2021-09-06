@@ -46,8 +46,8 @@
     <table class="table text-center">
         <thead>
             <tr>
-                <th>#</th>
-                <th>name</th>
+                <th>Id</th>
+                <th>Name</th>
                 <th>Group name</th>
                 <th>Action</th>
 
