@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\DashBoard\DashBoardController;
 use App\Http\Controllers\Admin\Employee\EmployeeController;
 use App\Http\Controllers\Admin\Group\GroupController;
 use App\Http\Controllers\Admin\Team\TeamController;
+use App\Http\Controllers\Backend\Users\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -75,4 +76,42 @@ Route::prefix('/admin')->name('admin.')->group(function () {
 
         Route::get('/delete', [EmployeeController::class, 'delete'])->name('getDelete');
     });
+});
+
+Route::name('backend.')->group(function () {
+    Route::prefix('/users')->name('users.')->group(function () {
+        Route::get('/', [UserController::class ,'index'])->name('show');
+        Route::get('/create', 'App\Http\Controllers\Backend\Users\UserController@create')->name('create');
+        Route::post('/store/user', 'App\Http\Controllers\Backend\Users\UserController@store')->name('store');
+        Route::get('/view/{id}', 'App\Http\Controllers\Backend\Users\UserController@view')->name('view');
+        Route::get('/edit/{id}', 'App\Http\Controllers\Backend\Users\UserController@edit')->name('edit');
+        Route::patch('/update/user', 'App\Http\Controllers\Backend\Users\UserController@update')->name('update');
+        Route::get('/delete/{id}', 'App\Http\Controllers\Backend\Users\UserController@delete')->name('delete');
+        Route::delete('/users/delete', 'App\Http\Controllers\Backend\Users\UserController@usersDelete')->name('users.delete');
+        Route::get('/search', 'App\Http\Controllers\Backend\Users\UserController@search')->name('search');
+    });
+
+    Route::prefix('/role')->name('role.')->group(function () {
+        Route::get('/', 'App\Http\Controllers\Backend\Role\RoleController@index')->name('show');
+        Route::get('/create', 'App\Http\Controllers\Backend\Role\RoleController@create')->name('create');
+        Route::post('/store/user', 'App\Http\Controllers\Backend\Role\RoleController@store')->name('store');
+        Route::get('/view/{id}', 'App\Http\Controllers\Backend\Role\RoleController@view')->name('view');
+        Route::get('/edit/{id}', 'App\Http\Controllers\Backend\Role\RoleController@edit')->name('edit');
+        Route::patch('/update/user', 'App\Http\Controllers\Backend\Role\RoleController@update')->name('update');
+        Route::get('/delete/{id}', 'App\Http\Controllers\Backend\Role\RoleController@delete')->name('delete');
+        Route::delete('/users/delete', 'App\Http\Controllers\Backend\Role\RoleController@usersDelete')->name('role.delete');
+        Route::get('/search', 'App\Http\Controllers\Backend\Role\RoleController@search')->name('search');
+    });
+
+    // Route::prefix('/customers')->name('customers.')->group(function () {
+    //     Route::get('/', 'App\Http\Controllers\Backend\Customers\CustomerController@index')->name('show');
+    //     Route::get('/create', 'App\Http\Controllers\Backend\Customers\CustomerController@create')->name('create');
+    //     Route::post('/store/customer', 'App\Http\Controllers\Backend\Customers\CustomerController@store')->name('store');
+    //     Route::get('/view/{id}', 'App\Http\Controllers\Backend\Customers\CustomerController@view')->name('view');
+    //     Route::get('/edit/{id}', 'App\Http\Controllers\Backend\Customers\CustomerController@edit')->name('edit');
+    //     Route::patch('/update/customer', 'App\Http\Controllers\Backend\Customers\CustomerController@update')->name('update');
+    //     Route::get('/delete/{id}', 'App\Http\Controllers\Backend\Customers\CustomerController@delete')->name('delete');
+    //     Route::delete('/customers/delete', 'App\Http\Controllers\Backend\Customers\CustomerController@customersDelete')->name('customers.delete');
+    //     Route::get('/search', 'App\Http\Controllers\Backend\Customers\CustomerController@search')->name('search');
+    // });
 });

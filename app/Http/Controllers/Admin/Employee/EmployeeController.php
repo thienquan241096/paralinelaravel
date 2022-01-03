@@ -65,6 +65,7 @@ class EmployeeController extends Controller
     {
         $teams  = $this->team->getAll();
         $employee = $this->employee->findByID($request->id);
+        dump($employee);
         $employee->load('m_teams');
         return view('admin.employee.view', compact('employee', 'teams'));
     }

@@ -24,6 +24,8 @@ class EmployeeRepository extends AbstractRepository implements InterfaceEmployee
 
     public function search($keyword)
     {
-        return $this->model->where('last_name', 'like', '%' . "$keyword" . '%')->where('del_flag', '=', DEL_FLAG)->orderByDesc('id');
+        return $this->model->where('last_name', 'like', '%' . "$keyword" . '%')
+        ->orWhere('first_name', 'like', '%' . "$keyword" . '%')
+        ->where('del_flag', '=', DEL_FLAG)->orderByDesc('id');
     }
 }

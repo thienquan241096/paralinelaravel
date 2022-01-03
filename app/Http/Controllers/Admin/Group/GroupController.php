@@ -47,6 +47,7 @@ class GroupController extends Controller
 
     public function postAdd(GroupFormRequest $request)
     {
+        
         $this->group->create($request->all());
         return response()->json([
             'status' => 200,
